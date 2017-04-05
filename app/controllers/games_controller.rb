@@ -8,7 +8,6 @@ class GamesController < ApplicationController
   
   def create
     game = Game.new(game_params)
-    binding.pry
     game.users << current_user
     if game.save
       redirect_to game
@@ -24,6 +23,10 @@ class GamesController < ApplicationController
   private
     def game_params
       params.require(:game).permit(:name)
+    end
+    
+    def current_user
+      current_user ||= Guest.create(name: "guest", email: rand.to_s + "@example.com")
     end
     
 end
