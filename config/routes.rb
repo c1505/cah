@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   root to: 'visitors#index'
   devise_for :users
   resources :users
+  resources :games, only: [:new, :index, :update, :create, :show]
 end
