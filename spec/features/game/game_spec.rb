@@ -35,5 +35,38 @@ feature 'game' do
     expect(page).to have_text "Players: 1"
   end
   
+  scenario 'join a game' do
+    Game.create
+    visit "games/1"
+    expect(page).to have_button "Join Game"
+    fill_in "Name", :with => "Join Test"
+    click_button "Join Game"
+    
+    expect(page).to have_text "Join Test"
+  end
+  
+  # scenario 'join game as guest'
+  
+  # scenario 'join game as registered user'
+  
+  scenario 'start game' do 
+    game_ready
+  end
+  
+  def game_ready
+    game = Game.create
+    bob = Guest.create(name: "bob")
+    carl = Guest.create(name: "carl")
+    game.users << bob
+    game.users << carl
+    game.save
+    visit 'games/1'
+    expect(page).to have_text("bob")
+  end
+    
+    
+  
+
+  
 
 end

@@ -7,4 +7,5 @@ Rails.application.routes.draw do
   devise_for :users
   resources :users
   resources :games, only: [:new, :index, :update, :create, :show]
+  post '/join/:id', to: 'games#join'
 end

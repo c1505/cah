@@ -3,3 +3,16 @@
 <p><% @game.users.each do |user| %></p>
   <p><%= user.name %> </p>
 <% end %>
+<% if user_signed_in? && !@game.users.include?(current_user) %>
+  <%= form_tag("/join/#{@game.id}", method: "post") do %>
+    <%= submit_tag( "Join Game") %>
+  <% end %>
+<% elsif !user_signed_in?  %>
+  <%= form_tag("/join/#{@game.id}", method: "post") do %>
+    <%= label_tag(:name, "Guest Name") %>
+    <%= text_field_tag(:name) %>
+    <%= submit_tag( "Join Game") %>
+  <% end %>
+<% else %>
+  <%= link_to "Start Game" %>
+<% end %>
