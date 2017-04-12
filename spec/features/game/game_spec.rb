@@ -51,16 +51,20 @@ feature 'game' do
   
   scenario 'start game' do 
     game_ready
+    click_button "Start Game"
+    expect(page).to have_text("Black Card")
+    expect(page).to have_text("cards submitted")
   end
   
   def game_ready
     game = Game.create
-    bob = Guest.create(name: "bob")
-    carl = Guest.create(name: "carl")
+    bob = Guest.create(name: "bob", email: rand.to_s + "@example.com")
     game.users << bob
-    game.users << carl
+    visit "games/1"
+    fill_in "Name", :with => "carl"
+    click_button "Join Game"
     game.save
-    visit 'games/1'
+    visit '/games/1'
     expect(page).to have_text("bob")
   end
     

@@ -28,6 +28,14 @@ class GamesController < ApplicationController
     @game = Game.find(params[:id])
   end
   
+  def start
+    @game = Game.find(params[:id])
+    @game.start
+    @game.save
+
+    redirect_to @game
+  end
+  
   private
     def game_params
       params.require(:game).permit(:name)

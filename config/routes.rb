@@ -8,4 +8,5 @@ Rails.application.routes.draw do
   resources :users
   resources :games, only: [:new, :index, :update, :create, :show]
   post '/join/:id', to: 'games#join'
+  post '/start/:id', to: 'games#start'
 end
