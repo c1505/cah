@@ -1,16 +1,18 @@
-<% if user_signed_in? && !game.users.include?(current_user) %>
+<div class="plan">
+  <% if user_signed_in? && !game.users.include?(current_user) %>
   <%= form_tag("/join/#{game.id}", method: "post") do %>
     <%= submit_tag( "Join Game") %>
   <% end %>
-<% elsif !user_signed_in?  %>
-  <%= form_tag("/join/#{game.id}", method: "post") do %>
-    <%= label_tag(:name, "Guest Name") %>
-    <%= text_field_tag(:name) %>
-    <%= submit_tag( "Join Game") %>
+  <% elsif !user_signed_in?  %>
+    <%= form_tag("/join/#{game.id}", method: "post") do %>
+      <%= label_tag(:name, "Guest Name") %>
+      <%= text_field_tag(:name) %>
+      <%= submit_tag( "Join Game") %>
+    <% end %>
+  <% else %>
+  <!--#FIXME should this be a nested route under the game?-->
+    <%= form_tag("/start/#{game.id}", method: "post") do %> 
+      <%= submit_tag("Start Game") %>
+    <% end %>
   <% end %>
-<% else %>
-<!--#FIXME should this be a nested route under the game?-->
-  <%= form_tag("/start/#{game.id}", method: "post") do %> 
-    <%= submit_tag("Start Game") %>
-  <% end %>
-<% end %>
+</div>

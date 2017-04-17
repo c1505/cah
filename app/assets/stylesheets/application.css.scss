@@ -11,6 +11,15 @@
  * file per style scope.
  *= require_self
  */
+
+.plan {
+  background: yellow;
+}
 .play {
   border: 5px solid black;
+  background: green;
+}
+body {
+  margin: 15px;
+  border: 10px;
 }
