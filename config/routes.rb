@@ -6,7 +6,9 @@ Rails.application.routes.draw do
   root to: 'visitors#index'
   devise_for :users
   resources :users
-  resources :games, only: [:new, :index, :update, :create, :show]
-  post '/join/:id', to: 'games#join'
-  post '/start/:id', to: 'games#start'
+  resources :games, only: [:new, :index, :update, :create, :show] do 
+    patch '/join', to: 'games#join'
+    patch '/start', to: 'games#start'
+  end
+  
 end

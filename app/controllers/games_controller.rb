@@ -7,7 +7,7 @@ class GamesController < ApplicationController
   end
   
   def join
-    @game = Game.find(params[:id])
+    @game = Game.find(params[:game_id])
     create_guest unless current_user
     @game.users << current_user
     @game.save
@@ -26,17 +26,12 @@ class GamesController < ApplicationController
   
   def show
     @game = Game.find(params[:id])
-    json = File.read("cah.json")
-    parsed = JSON.parse(json)
-    
-    black_cards = parsed["blackCards"]
-    
-
+    black_cards = BlackCard.all
     @black_card = black_cards[rand(black_cards.count)]
   end
   
   def start
-    @game = Game.find(params[:id])
+    @game = Game.find(params[:game_id])
     @game.start
     @game.save
 
