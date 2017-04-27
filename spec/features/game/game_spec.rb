@@ -52,6 +52,8 @@ feature 'game' do
   scenario 'start game' do 
     game_ready
     click_button "Start Game"
+    # see black card text
+    # see number of cards submitted
     expect(page).to have_text("Black Card")
     expect(page).to have_text("cards submitted")
   end

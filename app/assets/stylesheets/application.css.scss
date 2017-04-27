@@ -16,10 +16,40 @@
   background: yellow;
 }
 .play {
-  border: 5px solid black;
-  background: green;
+  
 }
 body {
   margin: 15px;
   border: 10px;
+}
+
+.black-card {
+  background: black;
+  color: white;
+  font-weight: bold;
+  
+  /* Card Sizing */
+  width: 2.5in;
+  height: 4in;
+  border-radius: .25in;
+  
+  /* Display Properties */
+  float: left;
+  margin: 10px;
+  
+    /*font information*/
+  font-family: Helvetica,sans-serif;
+  font-weight: bolder;
+  font-size: 26px;
+  padding-left:7%;
+  padding-right:7%;
+  word-wrap: break-word;
+  
+}
+
+.white-card {
+    /* Color information */
+  border: 3px solid black;
+  color: black;
+  background: white;
 }

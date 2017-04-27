@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170412215900) do
+ActiveRecord::Schema.define(version: 20170427191912) do
+
+  create_table "black_cards", force: :cascade do |t|
+    t.text     "text"
+    t.integer  "blanks"
+    t.integer  "user_id"
+    t.integer  "round_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["round_id"], name: "index_black_cards_on_round_id"
+    t.index ["user_id"], name: "index_black_cards_on_user_id"
+  end
 
   create_table "games", force: :cascade do |t|
     t.string   "name"
@@ -49,6 +60,16 @@ ActiveRecord::Schema.define(version: 20170412215900) do
     t.integer  "role"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "white_cards", force: :cascade do |t|
+    t.text     "text"
+    t.integer  "user_id"
+    t.integer  "round_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["round_id"], name: "index_white_cards_on_round_id"
+    t.index ["user_id"], name: "index_white_cards_on_user_id"
   end
 
 end

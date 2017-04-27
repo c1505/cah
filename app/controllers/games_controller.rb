@@ -26,6 +26,13 @@ class GamesController < ApplicationController
   
   def show
     @game = Game.find(params[:id])
+    json = File.read("cah.json")
+    parsed = JSON.parse(json)
+    
+    black_cards = parsed["blackCards"]
+    
+
+    @black_card = black_cards[rand(black_cards.count)]
   end
   
   def start

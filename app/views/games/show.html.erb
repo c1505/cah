@@ -1,12 +1,13 @@
 <h2>Game: <%= @game.name %></h2>
-<p><h3>Players(<%= @game.users.count %>):</h3> </p>
 
 <% if @game.started? %>
+  <h3>GamePlay</h3>
   <%= render partial: "play", locals: {game: @game} %>
 <% else %>
   <%= render partial: "plan", locals: {game: @game} %>
 <% end %>
-
+</br>
+<h3>Players(<%= @game.users.count %>):</h3>
 <% @game.users.each do |user| %>
   <p><%= user.name %> </p>
 <% end %>
