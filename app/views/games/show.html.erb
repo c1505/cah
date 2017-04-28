@@ -1,8 +1,12 @@
 <h2>Game: <%= @game.name %></h2>
 
-<% if @game.started? %>
+<% if @game.started?%>
   <h3>GamePlay</h3>
-  <%= render partial: "play", locals: {game: @game} %>
+  <% if @round.host == current_user %>
+    <%= render partial: "dealer", locals: {game: @game} %>
+  <% else %>
+    <%= render partial: "player", locals: {game: @game} %>
+  <% end %>
 <% else %>
   <%= render partial: "plan", locals: {game: @game} %>
 <% end %>

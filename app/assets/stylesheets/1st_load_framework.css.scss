@@ -3,9 +3,7 @@
 
 // these are not working and i don't know why
 @import "bootstrap";
-.play {
-  border: 5px solid black;
-}
+
 // make all images responsive by default
 img {
   @extend .img-fluid;

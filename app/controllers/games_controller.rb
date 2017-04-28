@@ -28,11 +28,14 @@ class GamesController < ApplicationController
   def show
     @game = Game.find(params[:id])
     
-    @round = @game.rounds.last
-    
-    @black_card = @round.black_card
-    @white_cards = @round.white_cards
-    
+    if @game.started?
+      @round = @game.rounds.last
+      @black_card = @round.black_card
+      
+      if @round.host == current_user
+        @white_cards = @round.white_cards
+      end
+    end
   end
 
   def start
