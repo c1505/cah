@@ -10,6 +10,10 @@ class Game < ApplicationRecord
     unless started?
       round = Round.new(number: 1)
       round.host = current_user
+      
+      black_cards = BlackCard.all
+      round.black_card = black_cards[rand(black_cards.count)]
+      
       round.save
       self.rounds << round
     end
