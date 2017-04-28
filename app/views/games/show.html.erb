@@ -5,7 +5,7 @@
   <% if @round.host == current_user %>
     <%= render partial: "dealer", locals: {game: @game} %>
   <% else %>
-    <%= render partial: "player", locals: {game: @game} %>
+    <%= render partial: "player", locals: {game: @game, round: @round} %>
   <% end %>
 <% else %>
   <%= render partial: "plan", locals: {game: @game} %>

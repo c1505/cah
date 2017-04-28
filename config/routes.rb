@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   root to: 'visitors#index'
   devise_for :users
   resources :users
+  #FIXME should i nest the rounds?
+  resources :rounds, only: [:update]
   resources :games, only: [:new, :index, :update, :create, :show] do 
     patch '/join', to: 'games#join'
     patch '/start', to: 'games#start'
