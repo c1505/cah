@@ -2,6 +2,14 @@
   <div class="black-card">
     <%= @black_card["text"] %>
   </div>
+  <%= form_for(game, :url => game_join_path(game)) do %>
+    <% @white_cards.each do |card| %>
+      <%= radio_button_tag(:white_card, card.text) %>
+      <%= label_tag(:white_card, card.text) %><br>
+    <% end %>
+  <%= submit_tag( "Submit Card") %>
+  <% end %>
+  
   <div>
     <div class='cardstack'>
     <div class='light stackcard'>
