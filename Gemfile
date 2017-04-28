@@ -47,6 +47,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'rubocop'
   gem 'sqlite3'
+  gem 'rails-erd'
 end
 group :production do
   gem 'pg'

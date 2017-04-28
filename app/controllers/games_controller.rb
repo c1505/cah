@@ -2,11 +2,11 @@ class GamesController < ApplicationController
   def new
     @game = Game.new
   end
-  
+
   def index
     @games = Game.all
   end
-  
+
   def join
     @game = Game.find(params[:game_id])
     create_guest unless current_user
@@ -14,7 +14,7 @@ class GamesController < ApplicationController
     @game.save
     redirect_to @game
   end
-  
+
   def create
     game = Game.new(game_params)
     game.users << create_guest
@@ -24,33 +24,33 @@ class GamesController < ApplicationController
       render new_game_path
     end
   end
-  
+
   def show
     @game = Game.find(params[:id])
     black_cards = BlackCard.all
     @black_card = black_cards[rand(black_cards.count)]
   end
-  
+
   def start
     @game = Game.find(params[:game_id])
-    @game.start
+    @game.start(current_user)
     @game.save
 
     redirect_to @game
   end
-  
+
   private
     def game_params
       params.require(:game).permit(:name)
     end
-    
+
     # def current_user
     #   current_user ||= Guest.create(name: "guest", email: rand.to_s + "@example.com")
     # end
-    
+
     def create_guest
       guest = Guest.create(name: params[:name], email: rand.to_s + "@example.com")
       sign_in(guest)
     end
-    
+
 end
