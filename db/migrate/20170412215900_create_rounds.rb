@@ -4,6 +4,7 @@ class CreateRounds < ActiveRecord::Migration[5.0]
       t.references :game
       t.integer :number
       t.references :user
+      t.references :black_card
 
       t.timestamps
     end

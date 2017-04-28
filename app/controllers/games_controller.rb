@@ -27,6 +27,14 @@ class GamesController < ApplicationController
 
   def show
     @game = Game.find(params[:id])
+    
+    @round = @game.rounds.last
+    
+    
+    # @black_card = @round.black_card
+    @white_cards = @round.white_cards
+    
+    
     black_cards = BlackCard.all
     @black_card = black_cards[rand(black_cards.count)]
   end
