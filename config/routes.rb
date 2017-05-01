@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :users
   #FIXME should i nest the rounds?
   resources :rounds, only: [:update]
+  patch "/rounds/:id/winner", to: "rounds#winner" #FIXME better way to have a route for this
   resources :games, only: [:new, :index, :update, :create, :show] do 
     patch '/join', to: 'games#join'
     patch '/start', to: 'games#start'
