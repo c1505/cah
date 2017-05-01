@@ -7,8 +7,10 @@ class RoundsController < ApplicationController
     # save card to round
     # remove card from user inventory
     #
-    @game = Game.find(params[:id])
-    @round = @game.rounds.last
+
+    
+    @round = Round.find(params[:id])
+    @game = @round.game
     # FIXME should just pass the card id with the form
     @white_card = WhiteCard.find_by(text: params[:white_card])
     @white_card.user = current_user

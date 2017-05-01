@@ -3,6 +3,9 @@
     <%= @black_card["text"] %>
   </div>
   <div>
-    Cards Submitted
+    <h3>Cards Submitted:</h3>
+    <% white_cards.each do |card| %>
+      <%= card.text %></br>
+    <% end %>
   </div>
 </div>
