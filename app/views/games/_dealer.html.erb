@@ -1,3 +1,7 @@
+<h2>Scores</h2>
+<% @scores.each do |score| %>
+  Name: <%=score[0]%> Black Cards: <%=score[1] %></br>
+<% end %>
 <div class="play col-xs-6 col-lg-4">
   <div class="black-card">
     <%= @black_card["text"] %>

@@ -11,7 +11,3 @@
   <%= render partial: "plan", locals: {game: @game} %>
 <% end %>
 </br>
-<h3>Players(<%= @game.users.count %>):</h3>
-<% @scores.each do |score| %>
-  Name: <%=score[0]%> Black Cards: <%=score[1] %></br>
-<% end %>

@@ -1,3 +1,4 @@
+<h3>Players(<%= @game.users.count %>):</h3>
 <div class="plan">
   <% if user_signed_in? && !game.users.include?(current_user) %>
   <%= form_for(@game, :url => game_join_path(@game)) do %>
