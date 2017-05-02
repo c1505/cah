@@ -1,8 +1,6 @@
 class RoundsController < ApplicationController
   def update
-    # round.white_cards << roundparams
-    # round.save
-    # current_user.active_cards -= roundparams
+
 
     # save card to round
     # remove card from user inventory
@@ -14,7 +12,6 @@ class RoundsController < ApplicationController
     # FIXME should just pass the card id with the form
     @white_card = WhiteCard.find_by(text: params[:white_card])
     @white_card.user = current_user
-    @white_card.rounds << @round
     @white_card.save
     @round.white_cards << @white_card
     @round.save
