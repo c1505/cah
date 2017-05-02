@@ -12,6 +12,6 @@
 <% end %>
 </br>
 <h3>Players(<%= @game.users.count %>):</h3>
-<% @black_cards.each do |card| %>
-  <p><%= card.user.name %> - Black Cards: <%= card.black_cards.count%></p>
+<% @scores.each do |score| %>
+  Name: <%=score[0]%> Black Cards: <%=score[1] %></br>
 <% end %>

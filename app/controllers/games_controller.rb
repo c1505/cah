@@ -27,16 +27,17 @@ class GamesController < ApplicationController
 
   def show
     @game = Game.find(params[:id])
-    
+
     if @game.started?
       @round = @game.rounds.last
       @black_card = @round.black_card
-          
+
       @black_cards = @game.rounds.map do |round|
         round.black_card
       end
-      # b = Game.last.rounds.map {|f| f.black_card }.group_by{|i| i.user}
-      
+
+      @scores = score
+
       if @round.host == current_user
         @white_cards = @round.white_cards
       else
@@ -56,6 +57,14 @@ class GamesController < ApplicationController
   private
     def game_params
       params.require(:game).permit(:name)
+    end
+
+    def score
+      game_score = @game.rounds.map {|f| f.black_card }.group_by{|i| i.user}
+      game_score.delete_if {|f| f.nil?}
+      game_score.map do |f|
+        [f[0].name, f[1].count]
+      end
     end
 
     # def current_user
