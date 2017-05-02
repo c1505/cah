@@ -13,4 +13,5 @@ class User < ApplicationRecord
 
   has_and_belongs_to_many :games
   has_many :white_cards
+  has_many :black_cards
 end

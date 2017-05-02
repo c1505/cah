@@ -43,6 +43,9 @@ class RoundsController < ApplicationController
     
     @game.save
     redirect_to @game
+
+    
+    
   end
   
   private

@@ -31,6 +31,11 @@ class GamesController < ApplicationController
     if @game.started?
       @round = @game.rounds.last
       @black_card = @round.black_card
+          
+      @black_cards = @game.rounds.map do |round|
+        round.black_card
+      end
+      # b = Game.last.rounds.map {|f| f.black_card }.group_by{|i| i.user}
       
       if @round.host == current_user
         @white_cards = @round.white_cards
