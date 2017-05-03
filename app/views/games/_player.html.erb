@@ -7,13 +7,6 @@
   <div class="black-card">
     <%= @black_card["text"].gsub("_", "____").html_safe %>
   </div></br>
-  <%= form_for(round, :url => round_path(round)) do %>
-    <% @white_cards.each do |card| %>
-      <%= radio_button_tag(:white_card, card.text) %>
-      <%= label_tag(:white_card, card.text.html_safe) %><br>
-    <% end %>
-  <%= submit_tag( "Submit Card") %>
-  <% end %>
   <div>
     <div class='cardstack'>
     <% @white_cards.each do |card| %>
@@ -25,5 +18,16 @@
     <% end %>
     </div>
   </div>
-  
+
+
+
+</div>
+<div>
+<%= form_for(round, :url => round_path(round)) do %>
+  <% @white_cards.each do |card| %>
+    <%= radio_button_tag(:white_card, card.text) %>
+    <%= label_tag(:white_card, card.text.html_safe) %><br>
+  <% end %>
+<%= submit_tag( "Submit Card") %>
+<% end %>
 </div>

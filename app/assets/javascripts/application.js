@@ -15,3 +15,8 @@
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require_tree .
+$(document).ready(function(){
+    $("div.light.stackcard").click(function(){
+        $(this).toggleClass("high");
+    });
+});

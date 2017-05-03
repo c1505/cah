@@ -16,7 +16,7 @@
   background: yellow;
 }
 .play {
-  
+
 }
 body {
   margin: 15px;
@@ -27,16 +27,16 @@ body {
   background: black;
   color: white;
   font-weight: bold;
-  
+
   /* Card Sizing */
   width: 2.5in;
   height: 4in;
   border-radius: .25in;
-  
+
   /* Display Properties */
   float: left;
   margin: 10px;
-  
+
     /*font information*/
   font-family: Helvetica,sans-serif;
   font-weight: bolder;
@@ -44,7 +44,7 @@ body {
   padding-left:7%;
   padding-right:7%;
   word-wrap: break-word;
-  
+
 }
 
 .white-card {
@@ -111,7 +111,7 @@ body {
   width: 2.5in;
   height: 4in;
   border-radius: .25in;
-  
+
   /* Display Properties */
   position:absolute;
   margin: 10px;
@@ -143,4 +143,7 @@ body {
 .stackcard:nth-child(7){
   margin: 10px;
   margin-top: 430px;
+}
+.high{
+  background-color: yellow;
 }
