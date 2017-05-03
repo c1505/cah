@@ -1,6 +1,6 @@
 <h2>Scores</h2>
 <% @scores.each do |score| %>
-  Name: <%=score[0]%> Black Cards: <%=score[1] %></br>
+  Name: <%=score[0]%> - Black Cards: <%=score[1] %></br>
 <% end %>
 <div class="play col-xs-6 col-lg-4">
   <div class="black-card">
@@ -11,7 +11,7 @@
     <%= form_for(round, :url => "/rounds/#{round.id}/winner") do %>
       <% white_cards.each do |card| %>
         <%= radio_button_tag(:white_card, card.text) %>
-        <%= label_tag(:white_card, card.text) %><br>
+        <%= label_tag(:white_card, card.text.html_safe) %><br>
       <% end %>
       <%= submit_tag( "Choose Winner") %>
     <% end %>

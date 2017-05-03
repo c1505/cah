@@ -1,16 +1,16 @@
-<h2>Dealer: <%= @round.host.name %></h2>
-<h2>Scores</h2>
+<h4>Dealer: <%= @round.host.name %></h2>
+<h4>Scores:</h2>
 <% @scores.each do |score| %>
-  Name: <%=score[0]%> Black Cards: <%=score[1] %></br>
+  Name: <%=score[0]%> - Black Cards: <%=score[1] %></br>
 <% end %>
 <div class="play col-xs-6 col-lg-4">
   <div class="black-card">
     <%= @black_card["text"].gsub("_", "____").html_safe %>
-  </div>
+  </div></br>
   <%= form_for(round, :url => round_path(round)) do %>
     <% @white_cards.each do |card| %>
       <%= radio_button_tag(:white_card, card.text) %>
-      <%= label_tag(:white_card, card.text) %><br>
+      <%= label_tag(:white_card, card.text.html_safe) %><br>
     <% end %>
   <%= submit_tag( "Submit Card") %>
   <% end %>

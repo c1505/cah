@@ -1,7 +1,6 @@
-<h2>Game: <%= @game.name %></h2>
+<h3>Game: <%= @game.name %></h3>
 
 <% if @game.started?%>
-  <h3>GamePlay</h3>
   <% if @round.host == current_user %>
     <%= render partial: "dealer", locals: {game: @game, white_cards: @white_cards, round: @round} %>
   <% else %>
