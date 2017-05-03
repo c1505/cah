@@ -5,7 +5,7 @@
 <% end %>
 <div class="play col-xs-6 col-lg-4">
   <div class="black-card">
-    <%= @black_card["text"] %>
+    <%= @black_card["text"].gsub("_", "____").html_safe %>
   </div>
   <%= form_for(round, :url => round_path(round)) do %>
     <% @white_cards.each do |card| %>
