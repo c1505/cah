@@ -59,7 +59,7 @@ class GamesController < ApplicationController
       params.require(:game).permit(:name)
     end
 
-    def score
+    def score #FIXME this can be done better with just a good SQL query
       game_score = @game.rounds.map {|f| f.black_card }.group_by{|i| i.user}
       game_score.delete_if {|f| f.nil?}
       game_score.map do |f|
