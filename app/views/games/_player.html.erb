@@ -14,29 +14,16 @@
     <% end %>
   <%= submit_tag( "Submit Card") %>
   <% end %>
-
   <div>
     <div class='cardstack'>
-    <div class='light stackcard'>
-      <ul class='text menu'>
-        <li>about</li>
-      </ul>
-    </div>
-    <div class='light stackcard'>
-      <ul class='text menu'>
-        <li>blog</li>
-      </ul>
-    </div>
-    <div class='light stackcard'>
-      <ul class='text menu'>
-        <li>portfolio</li>
-      </ul>
-    </div>
-    <div class='light stackcard'>
-      <ul class='text menu'>
-        <li>contact</li>
-      </ul>
+    <% @white_cards.each do |card| %>
+      <div class='light stackcard'>
+        <ul class='text2 menu'>
+          <li><%=card.text.html_safe%></li>
+        </ul>
+      </div>
+    <% end %>
     </div>
   </div>
-  </div>
+  
 </div>

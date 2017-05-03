@@ -82,6 +82,15 @@ body {
   word-wrap: break-word;
 }
 
+.text2{
+  /*font information*/
+  font-family: Helvetica,sans-serif;
+  font-weight: bolder;
+  font-size: 13px;
+  padding-left:7%;
+  padding-right:7%;
+  word-wrap: break-word;
+}
 
 
 .menu{
@@ -121,4 +130,17 @@ body {
 .stackcard:nth-child(4){
   margin: 10px;
   margin-top: 220px;
+}
+
+.stackcard:nth-child(5){
+  margin: 10px;
+  margin-top: 290px;
+}
+.stackcard:nth-child(6){
+  margin: 10px;
+  margin-top: 360px;
+}
+.stackcard:nth-child(7){
+  margin: 10px;
+  margin-top: 430px;
 }
