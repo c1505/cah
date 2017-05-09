@@ -1,10 +1,5 @@
 class RoundsController < ApplicationController
-  def update
-
-
-    # save card to round
-    # remove card from user inventory
-    #
+  def update  
 
 
     @round = Round.find(params[:id])

@@ -1,5 +1,6 @@
 <h4>Dealer: <%= @round.host.name %></h2>
 <h4>Scores:</h2>
+<p hidden id="round"><%=@round.id %></p>
 <% @scores.each do |score| %>
   Name: <%=score[0]%> - Black Cards: <%=score[1] %></br>
 <% end %>

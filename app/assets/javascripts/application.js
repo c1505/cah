@@ -16,10 +16,20 @@
 //= require bootstrap-sprockets
 //= require_tree .
 $(document).ready(function(){
+    submitCard();
+});
+
+function submitCard() {
     $("div.light.stackcard").click(function(){
         $("div.light.stackcard.high").removeClass("high")
         $(this).toggleClass("high");
         var cardId = $("div.light.stackcard.high :hidden").text();
-        alert(cardId);
+        var roundId = $("#round").text()
+        $.ajax({
+            method: "PUT",
+            url: "/rounds/" + roundId,
+            data: {"cardId" : cardId}
+        })
+        alert(cardId)
     });
-});
+}
