@@ -23,13 +23,14 @@ function submitCard() {
     $("div.light.stackcard").click(function(){
         $("div.light.stackcard.high").removeClass("high");
         $(this).toggleClass("high");
-        var cardId = $("div.light.stackcard.high :hidden").text();
-        var roundId = $("#round").text();
-        $.ajax({
-            method: "PUT",
-            url: "/rounds/" + roundId,
-            data: {"cardId" : cardId}
-        });
-        alert(cardId);
+        if (confirm("Submit Card")) {
+          var cardId = $("div.light.stackcard.high :hidden").text();
+          var roundId = $("#round").text();
+          $.ajax({
+              method: "PUT",
+              url: "/rounds/" + roundId,
+              data: {"cardId" : cardId}
+          });
+        }
     });
 }
