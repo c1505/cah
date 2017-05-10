@@ -9,7 +9,7 @@ class RoundsController < ApplicationController
     @white_card.save
     @round.white_cards << @white_card
     @round.save
-    flash[:success] = "Card submitted: #{params[:white_card]}"
+    flash[:success] = "Card submitted: #{@white_card.text}"
     redirect_to @game
   end
 
