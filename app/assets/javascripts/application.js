@@ -21,10 +21,9 @@ $(document).ready(function(){
 
 function submitCard() {
     $("div.light.stackcard").click(function(){
-        $("div.light.stackcard.high").removeClass("high");
-        $(this).toggleClass("high");
-        if (confirm("Submit Card")) {
-          var cardId = $("div.light.stackcard.high :hidden").text();
+        var cardText = $(this).find("li").first().text();
+        if (confirm("Submit Card?" )) {
+          var cardId = $(this).find(":hidden").text()
           var roundId = $("#round").text();
           $.ajax({
               method: "PUT",
