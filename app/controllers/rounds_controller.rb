@@ -21,7 +21,7 @@ class RoundsController < ApplicationController
     @round = Round.find(params[:id])
     @game = @round.game
     @black_card = @round.black_card
-    @white_card = WhiteCard.find_by(text: params[:white_card])
+    @white_card = WhiteCard.find_by(text: params[:white_card]) #FIXME should be by the id i think
     @black_card.white_card = @white_card
 
     @black_card.user = @white_card.user #FIXME do I really need this or should i reach through the assocation

@@ -41,7 +41,7 @@ class GamesController < ApplicationController
       if @round.host == current_user
         @white_cards = @round.white_cards
       else
-        @white_cards = WhiteCard.all.sample(7)
+        @white_cards = WhiteCard.sfw.sample(7)
       end
     end
   end
