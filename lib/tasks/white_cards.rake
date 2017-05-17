@@ -13,5 +13,13 @@ namespace :white_cards do
       f.save
     end
   end
+  
+  task sfw_to_json: :environment do
+    white_cards = WhiteCard.sfw.map do |card|
+      card.text
+    end
+    white_cards_hash = {"whiteCards" => white_cards}
+    File.open('sfw_whiteCards.json', 'w') {|file| file.write(white_cards_hash.to_json)}
+  end
 
 end
