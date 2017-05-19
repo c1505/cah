@@ -9,7 +9,7 @@ class RoundsController < ApplicationController
     @white_card.save
     @round.white_cards << @white_card
     @round.save
-    flash[:success] = "Card submitted: #{@white_card.text}"
+    flash[:notice] = "Card submitted: #{@white_card.text}"
     redirect_to @game
   end
 
@@ -25,7 +25,7 @@ class RoundsController < ApplicationController
     @black_card.white_card = @white_card
 
     @black_card.user = @white_card.user #FIXME do I really need this or should i reach through the assocation
-    flash[:success] = "The winner is: #{params[:white_card]}" if @black_card.save
+    flash[:notice] = "The winner is: #{params[:white_card]}" if @black_card.save
 
 
     round_number = @round.number + 1 #FIXME not sure if I need a round number
