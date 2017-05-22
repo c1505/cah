@@ -5,7 +5,4 @@ class WhiteCard < ApplicationRecord
   
   scope :sfw, -> { where(sfw: true) }
   
-  def sfw?
-    sfw == "false"
-  end
 end
