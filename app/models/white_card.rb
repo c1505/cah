@@ -5,4 +5,6 @@ class WhiteCard < ApplicationRecord
   
   scope :sfw, -> { where(sfw: true) }
   
+  scope :nsfw, -> { where(sfw: false) }
+  
 end

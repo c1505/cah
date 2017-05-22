@@ -14,14 +14,30 @@ json = File.read("cah.json")
 parsed = JSON.parse(json)
 
 black_cards = parsed["blackCards"]
-white_cards = parsed["whiteCards"]
+
 
 black_cards.each do |card|
   BlackCard.create(text: card["text"], blanks: card["pick"])
 end
 
-white_cards.each do |card|
-  WhiteCard.create(text: card)
+
+sfw_json = File.read("sfw_whiteCards.json")
+sfw_white_cards = JSON.parse(sfw_json)
+
+sfw_white_cards = sfw_white_cards["whiteCards"]
+
+sfw_white_cards.each do |card|
+  WhiteCard.create(text: card, sfw: true)
+end
+
+
+nsfw_json = File.read("nsfw_whiteCards.json")
+nsfw_white_cards = JSON.parse(nsfw_json)
+
+nsfw_white_cards = nsfw_white_cards["whiteCards"]
+
+nsfw_white_cards.each do |card|
+  WhiteCard.create(text: card, sfw: false)
 end
 
 #CARDS#
