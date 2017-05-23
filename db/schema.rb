@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170523203742) do
+ActiveRecord::Schema.define(version: 20170523213146) do
 
   create_table "black_cards", force: :cascade do |t|
     t.text     "text"
@@ -88,6 +88,12 @@ ActiveRecord::Schema.define(version: 20170523203742) do
     t.boolean  "sfw"
     t.index ["round_id"], name: "index_white_cards_on_round_id"
     t.index ["user_id"], name: "index_white_cards_on_user_id"
+  end
+
+  create_table "white_decks", id: false, force: :cascade do |t|
+    t.integer "game_id",       null: false
+    t.integer "white_card_id", null: false
+    t.index ["game_id", "white_card_id"], name: "index_white_decks_on_game_id_and_white_card_id"
   end
 
 end
