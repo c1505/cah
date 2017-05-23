@@ -16,6 +16,7 @@
 //= require_tree .
 $(document).ready(function(){
     submitCard();
+    shareLink();
 });
 
 function submitCard() {
@@ -31,4 +32,9 @@ function submitCard() {
           });
         }
     });
+}
+
+function shareLink() {
+  var link = window.location.href;
+  $("#share").append("<a href='sms:?body=" + link + "'>share via sms</a>");
 }
