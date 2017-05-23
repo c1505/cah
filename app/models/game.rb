@@ -1,6 +1,8 @@
 class Game < ApplicationRecord
   has_and_belongs_to_many :users
   has_many :rounds
+  has_many :black_decks
+  has_many :black_cards, :through => :black_decks
 
   def started?
     !rounds.blank?
