@@ -281,6 +281,9 @@ GEM
       rubyzip (~> 1.0)
       websocket (~> 1.0)
     shellany (0.0.1)
+    simple_form (3.5.0)
+      actionpack (> 4, < 5.2)
+      activemodel (> 4, < 5.2)
     slop (3.6.0)
     spring (2.0.1)
       activesupport (>= 4.2)
@@ -359,6 +362,7 @@ DEPENDENCIES
   rubocop
   sass-rails (~> 5.0)
   selenium-webdriver
+  simple_form
   spring
   spring-commands-rspec
   spring-watcher-listen (~> 2.0.0)
