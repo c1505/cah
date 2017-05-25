@@ -18,6 +18,11 @@ class GamesController < ApplicationController
   def create
     game = Game.new(game_params)
     game.users << create_guest
+    if params["other"]["sfw"] == "1"
+      game.white_cards = WhiteCard.sfw
+    else
+      game.white_cards = WhiteCard.all
+    end
     if game.save
       redirect_to game
     else
@@ -41,7 +46,7 @@ class GamesController < ApplicationController
       if @round.host == current_user
         @white_cards = @round.white_cards
       else
-        @white_cards = WhiteCard.sfw.sample(7)
+        @white_cards = current_user.white_cards
       end
     end
   end

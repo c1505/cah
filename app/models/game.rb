@@ -15,6 +15,13 @@ class Game < ApplicationRecord
       round = Round.new(number: 1)
       round.host = current_user
       
+      self.users.each do |user|
+        user.white_cards = []
+        hand = white_cards.sample(7)
+        user.white_cards = hand
+        user.save
+        white_cards.delete(hand)
+      end
       black_cards = BlackCard.all
       round.black_card = black_cards[rand(black_cards.count)]
       
