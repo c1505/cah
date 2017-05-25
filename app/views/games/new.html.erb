@@ -1,5 +1,7 @@
-<%= form_for @game do |f| %>
-  <%= f.label :name %>
-  <%= f.text_field :name %>
-  <%= f.submit 'Create Game', :class => 'button right' %>
+<%= simple_form_for(@game) do |f| %>
+  <%= f.input :name %>
+  <%= simple_fields_for :other do |o| %>
+    <%= o.input :sfw, as: :boolean, label: 'Play with safe for work cards' %>
+  <% end %>
+  <%= f.button :submit %>
 <% end %>
