@@ -2,7 +2,7 @@ require "rails_helper"
 
 
 feature 'game' do
-  before :all do
+  before :each do
     seed
   end
 
@@ -51,7 +51,7 @@ feature 'game' do
     expect(Game.last.users.count).to eq 2
   end
 
-  scenario 'user has played whitecard removed and a new whitecard dealt each round', js: true do
+  scenario 'player can play white card', js: true, type: :feature do
     visit root_path
     click_link "New Game"
 
@@ -65,21 +65,47 @@ feature 'game' do
     logout
     login_as(User.first)
     visit '/games/1'
-    save_and_open_page
     within first"div.light.stackcard" do
       find(:css, 'li').click
     end
+    expect(page).to have_text "Card submitted"
+  end
+
+  scenario 'dealer can submit winning card', js: true, type: :feature do
+    white_card = player_submit
+    
     logout
     login_as(User.last)
     visit '/games/1'
-    # save_and_open_page
-
-    expect(User.first.white_cards.last).to eq "new"
+    white_card_css_id = "white_card_" + white_card.text.gsub(" ", "_")
+    choose(white_card_css_id)
+    click_button "Choose Winner"
+    expect(page).to have_text "The winner is:"
   end
 
-  scenario 'dealt white_card is removed from game'
+  private
+  
+  def player_submit
+    visit root_path
+    click_link "New Game"
 
+    fill_in "Name", :with => "First Game"
+    click_button "Create Game"
+    logout
+    visit '/games/1'
+    fill_in "name", :with => "Second Player"
+    click_button "Join Game"
+    click_button "Start Game"
+    logout
+    login_as(User.first)
+    visit '/games/1'
+    white_card = User.first.white_cards.first
+    within first"div.light.stackcard" do
+      find(:css, 'li').click
+    end
+    white_card
 
+  end
   def seed
     json = File.read("cah.json")
     parsed = JSON.parse(json)
