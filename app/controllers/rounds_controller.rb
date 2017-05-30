@@ -17,8 +17,10 @@ class RoundsController < ApplicationController
   def winner
     @round = Round.find(params[:id])
     @game = @round.game
+    
+    
     @black_card = @round.black_card
-    @white_card = WhiteCard.find_by(text: params[:white_card]) #FIXME should be by the id i think
+    @white_card = WhiteCard.find(params[:white_card])
     # FIXME whitecard user is nil because i removed it when I sent in the card
     @black_card.white_card = @white_card
     deal(@round.white_cards, @game)
@@ -46,7 +48,6 @@ class RoundsController < ApplicationController
       user.white_cards.delete(card)
       user.white_cards << game.white_cards.sample(1).first
     end
-      
   end
 
 

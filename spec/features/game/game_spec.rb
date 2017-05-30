@@ -77,7 +77,7 @@ feature 'game' do
     logout
     login_as(User.last)
     visit '/games/1'
-    white_card_css_id = "white_card_" + white_card.text.gsub(" ", "_")
+    white_card_css_id = "white_card_" + white_card.id.to_s
     choose(white_card_css_id)
     click_button "Choose Winner"
     expect(page).to have_text "The winner is:"
