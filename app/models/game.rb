@@ -29,5 +29,14 @@ class Game < ApplicationRecord
       self.rounds << round
     end
   end
+  
+  def deal(white_cards)
+    white_cards.each do |card|
+      user = card.user
+      self.white_cards.delete(card)
+      user.white_cards.delete(card)
+      user.white_cards << self.white_cards.sample(1).first
+    end
+  end
 
 end
