@@ -51,7 +51,7 @@ feature 'game' do
     expect(Game.last.users.count).to eq 2
   end
 
-  scenario 'user has played whitecard removed and a new whitecard dealt each round' do
+  scenario 'user has played whitecard removed and a new whitecard dealt each round', js: true do
     visit root_path
     click_link "New Game"
 
@@ -65,14 +65,14 @@ feature 'game' do
     logout
     login_as(User.first)
     visit '/games/1'
-
+    save_and_open_page
     within first"div.light.stackcard" do
       find(:css, 'li').click
     end
     logout
     login_as(User.last)
     visit '/games/1'
-    save_and_open_page
+    # save_and_open_page
 
     expect(User.first.white_cards.last).to eq "new"
   end
