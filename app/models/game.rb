@@ -14,7 +14,7 @@ class Game < ApplicationRecord
     unless started?
       round = Round.new(number: 1)
       round.host = current_user
-      
+
       self.users.each do |user|
         user.white_cards = []
         hand = white_cards.sample(7)
@@ -24,18 +24,26 @@ class Game < ApplicationRecord
       end
       black_cards = BlackCard.all
       round.black_card = black_cards[rand(black_cards.count)]
-      
+
       round.save
       self.rounds << round
     end
   end
-  
+
   def deal(white_cards)
     white_cards.each do |card|
       user = card.user
       self.white_cards.delete(card)
       user.white_cards.delete(card)
       user.white_cards << self.white_cards.sample(1).first
+    end
+  end
+
+  def build_deck(input)
+    if input == "1"
+      self.white_cards = WhiteCard.sfw
+    else
+      self.white_cards = WhiteCard.all
     end
   end
 

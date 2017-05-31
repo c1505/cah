@@ -18,11 +18,8 @@ class GamesController < ApplicationController
   def create
     game = Game.new(game_params)
     game.users << create_guest
-    if params["other"]["sfw"] == "1"
-      game.white_cards = WhiteCard.sfw
-    else
-      game.white_cards = WhiteCard.all
-    end
+    game.build_deck(params["other"]["sfw"])
+
     if game.save
       redirect_to game
     else
