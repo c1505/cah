@@ -36,6 +36,7 @@ class Game < ApplicationRecord
       self.white_cards.delete(card)
       user.white_cards.delete(card)
       user.white_cards << self.white_cards.sample(1).first
+      user.save
     end
   end
 

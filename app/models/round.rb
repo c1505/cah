@@ -12,4 +12,17 @@ class Round < ApplicationRecord
     round.black_card = black_cards.sample(1).first
     round
   end
+  
+  def winner
+    black_card.user
+  end
+  
+  def select_winner(white_card)
+    black_card.user = white_card.user  #FIXME this is the winner, but a problem that there can only be one per black card
+  end
+  
+  def play_card(user, white_card)
+    white_cards << white_card
+  end
+    
 end
