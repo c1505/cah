@@ -5,28 +5,47 @@ RSpec.describe Game, type: :model do
     seed_cards
   end
   describe "#deal" do
-    it "removes submitted card from user and gives new card" do
-      dealer = FactoryGirl.create(:user)
-      player = FactoryGirl.create(:user, name: "player", email: "user2@email.com")
-      game = Game.new(name: "deal")
-      game.users = [dealer, player]
-      game.build_deck("1")
-      game.save
-      game.start(dealer)
-      initial = player.white_cards
-      round = game.rounds.last
 
+    
+    it "removes submitted card from user, gives new card, and removes dealth card from game" do #FIXME maybe too many things for this test
+      
+      game_white_cards = WhiteCard.all.sample(8)
+      game = FactoryGirl.create(:game, white_cards: game_white_cards)
+      
+      player_white_cards = game_white_cards.sample(7)
+      player = FactoryGirl.create(:user, white_cards: player_white_cards)
+      
+      game.white_cards = game_white_cards - player_white_cards
       played_card = player.white_cards.first
-      round.play_card(player, played_card)
+      game.deal([played_card])
       
-      round.select_winner(round.white_cards.first)
-      game.deal(round.white_cards)
-
-      
+      expect(game.white_cards).to eq []
       expect(player.white_cards).to_not include(played_card)
-
     end
+      
   end
+  
+  # it "complete game setup" do
+    #   dealer = FactoryGirl.create(:user)
+    #   player = FactoryGirl.create(:user, name: "player", email: "user2@email.com")
+    #   game = Game.new(name: "deal")
+    #   game.users = [dealer, player]
+    #   game.build_deck("1")
+    #   game.save
+    #   game.start(dealer)
+    #   initial = player.white_cards
+    #   round = game.rounds.last
+
+    #   played_card = player.white_cards.first
+    #   round.play_card(player, played_card)
+      
+    #   round.select_winner(round.white_cards.first)
+    #   game.deal(round.white_cards)
+      
+    #   expect(game.white_cards).to_not include(played_card)
+    #   expect(player.white_cards).to_not include(played_card)
+
+    # end
     
   
   def seed_cards
