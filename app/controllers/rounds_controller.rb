@@ -22,20 +22,21 @@ class RoundsController < ApplicationController
     @black_card = @round.black_card
     @winning_white_card = WhiteCard.find(params[:white_card])
 
-
     @black_card.white_card = @winning_white_card #is there a point to this
 
     @game.deal(@round.white_cards)
     @round.select_winner(@winning_white_card)
-    @round.save
-    flash[:notice] = "The winner is: #{@winning_white_card.text}" if @black_card.save
-
-    @round = @round.next_round(@black_card, @game)
-
-    @game.rounds << @round
-
-    @game.save
-    redirect_to @game
+    
+    if @black_card.save && @game.save && @round.save
+      @round = @round.next_round(@black_card, @game)
+      @game.rounds << @round
+      flash[:notice] = "The winner is: #{@winning_white_card.text}"
+      redirect_to @game
+    else
+      render @game
+    end
+    
+    
   end
 
 

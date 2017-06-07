@@ -5,7 +5,6 @@ RSpec.describe Game, type: :model do
     seed_cards
   end
   describe "#deal" do
-
     
     it "removes submitted card from user, gives new card, and removes dealth card from game" do #FIXME maybe too many things for this test
       

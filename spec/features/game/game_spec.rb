@@ -68,7 +68,7 @@ feature 'game' do
     within first"div.light.stackcard" do
       find(:css, 'li').click
     end
-    expect(page).to have_text "Card submitted"
+    expect(page).to have_text "Card submitted: #{User.first.white_cards.first.text.html_safe}"
   end
 
   scenario 'dealer can submit winning card', js: true, type: :feature do
@@ -78,10 +78,13 @@ feature 'game' do
     login_as(User.last)
     visit '/games/1'
     white_card_css_id = "white_card_" + white_card.id.to_s
-    choose(white_card_css_id)
+    choose(white_card_css_id) #FIXME this fails often.  seems like it might be timing outq 
     click_button "Choose Winner"
-    expect(page).to have_text "The winner is:"
+    expect(page).to have_text "The winner is: #{white_card.text.html_safe}"
+    expect(Round.first.winner.id).to eq User.first.id
   end
+  
+  scenario 'multiple games can occur at the same time'
 
   private
   
