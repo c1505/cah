@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170523213146) do
+ActiveRecord::Schema.define(version: 20170613185759) do
 
   create_table "black_cards", force: :cascade do |t|
     t.text     "text"
@@ -46,8 +46,10 @@ ActiveRecord::Schema.define(version: 20170523213146) do
     t.integer  "number"
     t.integer  "user_id"
     t.integer  "black_card_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.integer  "winner_id"
+    t.integer  "winning_white_card_id"
     t.index ["black_card_id"], name: "index_rounds_on_black_card_id"
     t.index ["game_id"], name: "index_rounds_on_game_id"
     t.index ["user_id"], name: "index_rounds_on_user_id"

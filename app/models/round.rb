@@ -1,5 +1,7 @@
 class Round < ApplicationRecord
   belongs_to :host, class_name: 'User', foreign_key: 'user_id'
+  belongs_to :winner, class_name: 'User', foreign_key: 'winner_id'
+  belongs_to :winning_white_card, class_name: 'WhiteCard', foreign_key: 'winning_white_card_id'
   belongs_to :black_card
   has_and_belongs_to_many :white_cards
   belongs_to :game
@@ -13,12 +15,10 @@ class Round < ApplicationRecord
     round
   end
   
-  def winner
-    black_card.user
-  end
-  
   def select_winner(white_card)
-    black_card.user = white_card.user  #FIXME this is the winner, but a problem that there can only be one per black card
+    self.winner = white_card.user
+    self.winning_white_card = white_card
+    self.save
   end
   
   def play_card(user, white_card)
