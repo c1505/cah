@@ -32,15 +32,6 @@ feature 'Sign Up', :devise do
     expect(page).to have_content "Password can't be blank"
   end
 
-  # Scenario: Visitor cannot sign up with a short password
-  #   Given I am not signed in
-  #   When I sign up with a short password
-  #   Then I see a 'too short password' message
-  scenario 'visitor cannot sign up with a short password' do
-    sign_up_with('test@example.com', 'please', 'please')
-    expect(page).to have_content "Password is too short"
-  end
-
   # Scenario: Visitor cannot sign up without password confirmation
   #   Given I am not signed in
   #   When I sign up without a password confirmation
