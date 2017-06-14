@@ -1,5 +1,80 @@
 require 'rails_helper'
 
 RSpec.describe Round, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "#select_winner" do #FIXME this reaches into too many methods for setup.  integration test or make it reach into fewer
+    it "allows for winners of 2 separate games with the same black card text" do
+      seed_cards
+      
+      black_card_text = BlackCard.first.text
+      black_card_1 = BlackCard.first
+      black_card_2 = BlackCard.first
+      
+      host = FactoryGirl.create(:user, name: "host", email: "host@email.com")
+      user_1 = FactoryGirl.create(:user, name: "player1", email: "user1@email.com")
+      user_2 = FactoryGirl.create(:user, name: "player2", email: "user2@email.com")
+      
+      white_card_text = WhiteCard.sfw.first.text
+      winning_white_card_1 = WhiteCard.sfw.first
+      winning_white_card_2 = WhiteCard.sfw.first
+      
+      winning_white_card_1.user = user_1
+      winning_white_card_2.user = user_2
+      game_1 = Game.new(name: "game1")
+      game_2 = Game.new(name: "game2")
+      round_1 = Round.create(host: host, game: game_1, black_card: black_card_1)
+      
+      round_2 = Round.create(host: host, game: game_2, black_card: black_card_2)
+      round_1.play_card(user_1, winning_white_card_1 )
+      round_2.play_card(user_2, winning_white_card_2 )
+      
+      winning_white_card_1.save
+      winning_white_card_2.save
+      
+      round_1.select_winner(winning_white_card_1)
+      round_2.select_winner(winning_white_card_2)
+      
+      expect(round_1.black_card.text).to eq black_card_text
+      expect(round_2.black_card.text).to eq black_card_text
+      
+      expect(round_1.winner).to eq user_1
+      expect(round_2.winner).to eq user_2
+
+      expect(round_1.winning_white_card.text).to eq white_card_text
+      expect(round_2.winning_white_card.text).to eq white_card_text
+    end
+    
+  end
+  
+  def seed_cards
+    json = File.read("cah.json")
+    parsed = JSON.parse(json)
+
+    black_cards = parsed["blackCards"]
+
+
+    black_cards.sample(5).each do |card|
+      BlackCard.create(text: card["text"], blanks: card["pick"])
+    end
+
+
+    sfw_json = File.read("sfw_whiteCards.json")
+    sfw_white_cards = JSON.parse(sfw_json)
+
+    sfw_white_cards = sfw_white_cards["whiteCards"]
+
+    sfw_white_cards.sample(30).each do |card|
+      WhiteCard.create(text: card, sfw: true)
+    end
+
+
+    nsfw_json = File.read("nsfw_whiteCards.json")
+    nsfw_white_cards = JSON.parse(nsfw_json)
+
+    nsfw_white_cards = nsfw_white_cards["whiteCards"]
+
+    nsfw_white_cards.sample(10).each do |card|
+      WhiteCard.create(text: card, sfw: false)
+    end
+  end
+  
 end
