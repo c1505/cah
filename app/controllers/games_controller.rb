@@ -62,10 +62,9 @@ class GamesController < ApplicationController
     end
 
     def score #FIXME this can be done better with just a good SQL query
-      game_score = @game.rounds.map {|f| f.black_card }.group_by{|i| i.user}
-      game_score.delete_if {|f| f.nil?}
+      game_score = @game.rounds.map {|f| f.winner }.compact.group_by{|i| i.id}
       game_score.map do |f|
-        [f[0].name, f[1].count]
+        [f[1][0].name, f[1].count]
       end
     end
 

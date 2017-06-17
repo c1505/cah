@@ -70,14 +70,31 @@ feature 'game' do
     end
     expect(page).to have_text "Card submitted: #{User.first.white_cards.first.text.html_safe}"
   end
-
-  scenario 'dealer can submit winning card', js: true, type: :feature do
+  
+  scenario 'score is displayed', js: true, type: :feature do
     white_card = player_submit
     
     logout
     login_as(User.last)
     visit '/games/1'
     white_card_css_id = "white_card_" + white_card.id.to_s
+    expect(page).to have_text "Cards Submitted"
+    choose(white_card_css_id) #FIXME this fails often. 
+    click_button "Choose Winner"
+    expect(page).to have_text "The winner is: #{white_card.text.html_safe}"
+    expect(Round.first.winner.id).to eq User.first.id
+    
+    expect(page).to have_text "Scores: Player 1: 50"
+  end
+
+  scenario 'dealer can submit winning card', js: true, type: :feature do
+    white_card = player_submit
+    
+    logout
+    login_as(User.last) #maybe this sometime leads to wrong user?
+    visit '/games/1'
+    white_card_css_id = "white_card_" + white_card.id.to_s
+    expect(page).to have_text "Cards Submitted"
     choose(white_card_css_id) #FIXME this fails often.  seems like it might be timing outq 
     click_button "Choose Winner"
     expect(page).to have_text "The winner is: #{white_card.text.html_safe}"
@@ -85,6 +102,8 @@ feature 'game' do
   end
   
   scenario 'multiple games can occur at the same time'
+  
+
 
   private
   
@@ -106,8 +125,12 @@ feature 'game' do
     within first"div.light.stackcard" do
       find(:css, 'li').click
     end
+    
+    sleep(5.seconds)
+    white_card_text = User.first.white_cards.first.text.html_safe
+    puts User.all.count
+    expect(page).to have_text "Card submitted: #{white_card_text}"
     white_card
-
   end
   def seed
     json = File.read("cah.json")
