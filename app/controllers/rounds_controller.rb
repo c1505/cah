@@ -1,6 +1,5 @@
 class RoundsController < ApplicationController
   def update
-
     @round = Round.find(params[:id])
     @game = @round.game
     @white_card = WhiteCard.find(params[:cardId])
@@ -10,11 +9,10 @@ class RoundsController < ApplicationController
       redirect_to @game
     else
       flash[:alert] = "error.  Please try again"
-      render @game 
+      render @game
     end
-    
-  end
 
+  end
 
   def winner
     @round = Round.find(params[:id])
@@ -22,11 +20,9 @@ class RoundsController < ApplicationController
     @black_card = @round.black_card
     @winning_white_card = WhiteCard.find(params[:white_card])
 
-    @black_card.white_card = @winning_white_card #is there a point to this
-
     @game.deal(@round.white_cards)
     @round.select_winner(@winning_white_card)
-    
+
     if @black_card.save && @game.save && @round.save
       @round = @round.next_round(@black_card, @game)
       @game.rounds << @round
@@ -35,10 +31,7 @@ class RoundsController < ApplicationController
     else
       render @game
     end
-    
-    
+
   end
-
-
 
 end

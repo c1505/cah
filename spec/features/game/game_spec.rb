@@ -1,12 +1,11 @@
 require "rails_helper"
 
-
 feature 'game' do
   before :each do
     seed
   end
 
-  scenario 'sfw white cards' do
+  scenario 'start game with sfw white cards' do
     visit root_path
     click_link "New Game"
 
@@ -17,7 +16,7 @@ feature 'game' do
     expect(Game.last.white_cards.count).to eq 30 #FIXME Will break once I include more cards.  Maybe just have a smaller test set to seed with.
   end
 
-  scenario 'nsfw white cards' do
+  scenario 'start game with nsfw white cards' do
     visit root_path
     click_link "New Game"
 
@@ -70,48 +69,45 @@ feature 'game' do
     end
     expect(page).to have_text "Card submitted: #{User.first.white_cards.first.text.html_safe}"
   end
-  
+
   scenario 'score is displayed', js: true, type: :feature do
     white_card = player_submit
-    
+
     logout
     login_as(User.last)
     visit '/games/1'
     white_card_css_id = "white_card_" + white_card.id.to_s
     expect(page).to have_text "Cards Submitted"
-    choose(white_card_css_id) #FIXME this fails often. 
+    choose(white_card_css_id) #FIXME this fails often.
     click_button "Choose Winner"
     expect(page).to have_text "The winner is: #{white_card.text.html_safe}"
     expect(Round.first.winner.id).to eq User.first.id
-    
-    expect(page).to have_text "Scores: Player 1: 50"
+
+    expect(page).to have_text "Scores: Name: - Black Cards: 1"
   end
 
   scenario 'dealer can submit winning card', js: true, type: :feature do
     white_card = player_submit
-    
+
     logout
     login_as(User.last) #maybe this sometime leads to wrong user?
     visit '/games/1'
     white_card_css_id = "white_card_" + white_card.id.to_s
     expect(page).to have_text "Cards Submitted"
-    choose(white_card_css_id) #FIXME this fails often.  seems like it might be timing outq 
+    choose(white_card_css_id) #FIXME this fails often.  seems like it might be timing outq
     click_button "Choose Winner"
     expect(page).to have_text "The winner is: #{white_card.text.html_safe}"
     expect(Round.first.winner.id).to eq User.first.id
   end
-  
-  scenario 'multiple games can occur at the same time'
-  
-
 
   private
-  
+
   def player_submit
     visit root_path
     click_link "New Game"
 
     fill_in "Name", :with => "First Game"
+    check "other_sfw"
     click_button "Create Game"
     logout
     visit '/games/1'
@@ -125,13 +121,12 @@ feature 'game' do
     within first"div.light.stackcard" do
       find(:css, 'li').click
     end
-    
-    sleep(5.seconds)
+
     white_card_text = User.first.white_cards.first.text.html_safe
-    puts User.all.count
     expect(page).to have_text "Card submitted: #{white_card_text}"
     white_card
   end
+
   def seed
     json = File.read("cah.json")
     parsed = JSON.parse(json)
@@ -143,7 +138,6 @@ feature 'game' do
       BlackCard.create(text: card["text"], blanks: card["pick"])
     end
 
-
     sfw_json = File.read("sfw_whiteCards.json")
     sfw_white_cards = JSON.parse(sfw_json)
 
@@ -153,13 +147,7 @@ feature 'game' do
       WhiteCard.create(text: card, sfw: true)
     end
 
-
-    nsfw_json = File.read("nsfw_whiteCards.json")
-    nsfw_white_cards = JSON.parse(nsfw_json)
-
-    nsfw_white_cards = nsfw_white_cards["whiteCards"]
-
-    nsfw_white_cards.sample(10).each do |card|
+    sfw_white_cards.sample(10).each do |card|
       WhiteCard.create(text: card, sfw: false)
     end
   end
