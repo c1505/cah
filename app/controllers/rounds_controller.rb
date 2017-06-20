@@ -3,6 +3,11 @@ class RoundsController < ApplicationController
     @round = Round.find(params[:id])
     @game = @round.game
     @white_card = WhiteCard.find(params[:cardId])
+    submitted_users = @round.white_cards.map {|card| card.user}
+    if submitted_users.include?(@white_card.user)
+      flash[:alert] = "Cannot submit more than one white_card per round"
+      redirect_to @game and return
+    end
     @round.play_card(current_user, @white_card)
     if @round.save
       flash[:notice] = "Card submitted: #{@white_card.text}"

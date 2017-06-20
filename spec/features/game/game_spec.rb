@@ -100,6 +100,19 @@ feature 'game' do
     expect(Round.first.winner.id).to eq User.first.id
   end
 
+scenario 'player can only submit one card', js: true, type: :feature do
+  player_submit
+
+  visit '/games/1'
+  within first"div.light.stackcard" do
+    find(:css, 'li').click
+  end
+
+  expect(Round.last.white_cards.count).to eq 1
+end
+
+scenario 'same white card can be used by players of 2 different games'
+
   private
 
   def player_submit
