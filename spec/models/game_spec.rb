@@ -5,25 +5,33 @@ RSpec.describe Game, type: :model do
     seed_cards
   end
   describe "#deal" do
-    
+
     it "removes submitted card from user, gives new card, and removes dealth card from game" do #FIXME maybe too many things for this test
-      
+
       game_white_cards = WhiteCard.all.sample(8)
       game = FactoryGirl.create(:game, white_cards: game_white_cards)
-      
+
       player_white_cards = game_white_cards.sample(7)
       player = FactoryGirl.create(:user, white_cards: player_white_cards)
-      
+
       game.white_cards = game_white_cards - player_white_cards
       played_card = player.white_cards.first
       game.deal([played_card])
-      
+
       expect(game.white_cards).to eq []
       expect(player.white_cards).to_not include(played_card)
     end
-      
+
+    it "same white card can be used in different games by different players in different games" do
+      user_1 = FactoryGirl.create(:user, name: "player1", email: "user1@email.com")
+      user_2 = FactoryGirl.create(:user, name: "player2", email: "user2@email.com")
+
+      expect(user_1.white_cards.first).to eq white_card_text
+      expect(user_2.white_cards.first).to eq white_card_text
+    end
+
   end
-  
+
   # it "complete game setup" do
     #   dealer = FactoryGirl.create(:user)
     #   player = FactoryGirl.create(:user, name: "player", email: "user2@email.com")
@@ -37,16 +45,16 @@ RSpec.describe Game, type: :model do
 
     #   played_card = player.white_cards.first
     #   round.play_card(player, played_card)
-      
+
     #   round.select_winner(round.white_cards.first)
     #   game.deal(round.white_cards)
-      
+
     #   expect(game.white_cards).to_not include(played_card)
     #   expect(player.white_cards).to_not include(played_card)
 
     # end
-    
-  
+
+
   def seed_cards
     json = File.read("cah.json")
     parsed = JSON.parse(json)

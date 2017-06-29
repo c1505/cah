@@ -111,7 +111,9 @@ scenario 'player can only submit one card', js: true, type: :feature do
   expect(Round.last.white_cards.count).to eq 1
 end
 
-scenario 'same white card can be used by players of 2 different games'
+scenario 'same white card can be used in different games by different players in different games'
+
+
 
   private
 
@@ -130,6 +132,31 @@ scenario 'same white card can be used by players of 2 different games'
     logout
     login_as(User.first)
     visit '/games/1'
+    white_card = User.first.white_cards.first
+    within first"div.light.stackcard" do
+      find(:css, 'li').click
+    end
+
+    white_card_text = User.first.white_cards.first.text.html_safe
+    expect(page).to have_text "Card submitted: #{white_card_text}"
+    white_card
+  end
+
+  def player_submit_game_2
+    visit root_path
+    click_link "New Game"
+
+    fill_in "Name", :with => "First Game"
+    check "other_sfw"
+    click_button "Create Game"
+    logout
+    visit '/games/1'
+    fill_in "name", :with => "Second Player"
+    click_button "Join Game"
+    click_button "Start Game"
+    logout
+    login_as(User.first)
+    visit '/games/2'
     white_card = User.first.white_cards.first
     within first"div.light.stackcard" do
       find(:css, 'li').click
