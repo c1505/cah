@@ -30,14 +30,14 @@ class Game < ApplicationRecord
     end
   end
 
-  def deal(played_white_cards)
-    played_white_cards.each do |played_card|
-      user = played_card.user
-      user.white_cards.delete(played_card)
-      new_card = self.white_cards.sample(1).first
-      user.white_cards << new_card
-      self.white_cards.delete(new_card)
-    end
+  def deal(played_white_cards=[])
+      played_white_cards.each do |played_card|
+        user = played_card.user
+        user.white_cards.delete(played_card)
+        new_card = self.white_cards.sample(1).first
+        user.white_cards << new_card
+        self.white_cards.delete(new_card)
+      end
   end
 
   def build_deck(input)

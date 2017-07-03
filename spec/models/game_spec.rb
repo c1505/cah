@@ -6,7 +6,7 @@ RSpec.describe Game, type: :model do
   end
   describe "#deal" do
 
-    it "removes submitted card from user, gives new card, and removes dealth card from game" do #FIXME maybe too many things for this test
+    it "removes submitted card from user, gives new card, and removes dealt card from game" do #FIXME maybe too many things for this test
 
       game_white_cards = WhiteCard.all.sample(8)
       game = FactoryGirl.create(:game, white_cards: game_white_cards)
@@ -25,10 +25,33 @@ RSpec.describe Game, type: :model do
     it "same white card can be used in different games by different players in different games" do
       user_1 = FactoryGirl.create(:user, name: "player1", email: "user1@email.com")
       user_2 = FactoryGirl.create(:user, name: "player2", email: "user2@email.com")
+      dealer = FactoryGirl.create(:user, name: "dealer", email: "dealer@email.com")
 
-      expect(user_1.white_cards.first).to eq white_card_text
-      expect(user_2.white_cards.first).to eq white_card_text
+
+      game_1 = Game.new(name: "game1")
+      game_2 = Game.new(name: "game2")
+
+      game_1.start(dealer)
+      game_2.start(dealer) # should probably reuse deal in start game
+
+      game_1.users << user_1
+      game_2.users << user_2
+
+      white_card = WhiteCard.new(text: "both users share me")
+      white_card.save
+
+      user_1.white_cards.pop
+      user_2.white_cards.pop
+
+      user_1.white_cards << white_card
+      user_2.white_cards << white_card
+
+      expect(user_1.white_cards.last).to eq white_card
+      expect(user_2.white_cards.last).to eq white_card
     end
+
+    it "one user can have 2 active games"
+      # user.white_cards query with round or game
 
   end
 

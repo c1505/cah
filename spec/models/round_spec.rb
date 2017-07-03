@@ -72,7 +72,6 @@ RSpec.describe Round, type: :model do
 
       expect(round_1.winner).to eq user_1
       expect(round_2.winner).to eq user_2
-      binding.pry
 
       expect(round_1.winning_white_card.text).to eq white_card_text
       expect(round_2.winning_white_card.text).to eq white_card_text
