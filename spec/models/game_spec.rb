@@ -22,37 +22,31 @@ RSpec.describe Game, type: :model do
       expect(player.white_cards).to_not include(played_card)
     end
 
-    it "same white card can be used in different games by different players in different games" do
-      user_1 = FactoryGirl.create(:user, name: "player1", email: "user1@email.com")
-      user_2 = FactoryGirl.create(:user, name: "player2", email: "user2@email.com")
-      dealer = FactoryGirl.create(:user, name: "dealer", email: "dealer@email.com")
+    it "one user can have 2 active games"
+    #  could not implement and instead clear the user.white_cards association
+    # for each user at the start of the game
 
+  end
+  it "different users can have same white_cards if not in the same game" do
 
-      game_1 = Game.new(name: "game1")
-      game_2 = Game.new(name: "game2")
+    sfw_json = File.read("sfw_whiteCards.json")
+    sfw_white_cards = JSON.parse(sfw_json)
 
-      game_1.start(dealer)
-      game_2.start(dealer) # should probably reuse deal in start game
+    sfw_white_cards = sfw_white_cards["whiteCards"]
 
-      game_1.users << user_1
-      game_2.users << user_2
-
-      white_card = WhiteCard.new(text: "both users share me")
-      white_card.save
-
-      user_1.white_cards.pop
-      user_2.white_cards.pop
-
-      user_1.white_cards << white_card
-      user_2.white_cards << white_card
-
-      expect(user_1.white_cards.last).to eq white_card
-      expect(user_2.white_cards.last).to eq white_card
+    sfw_white_cards.sample(7).each do |card|
+      WhiteCard.create(text: card, sfw: true)
     end
 
-    it "one user can have 2 active games"
-      # user.white_cards query with round or game
+    user_1 = FactoryGirl.create(:user, name: "player1", email: "user1@email.com")
+    user_2 = FactoryGirl.create(:user, name: "player2", email: "user2@email.com")
 
+    user_1.white_cards = WhiteCard.all
+    user_1.save
+    user_2.white_cards = WhiteCard.all
+    user_2.save
+
+    expect(user_1.white_cards).to eq user_2.white_cards
   end
 
   # it "complete game setup" do

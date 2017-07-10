@@ -5,7 +5,7 @@ class Round < ApplicationRecord
   belongs_to :black_card
   has_and_belongs_to_many :white_cards
   belongs_to :game
-  
+
   def next_round(black_card, game)
     round_number = self.number + 1 #FIXME not sure if I need a round number
     round = Round.new(number: round_number)
@@ -14,15 +14,17 @@ class Round < ApplicationRecord
     round.black_card = black_cards.sample(1).first
     round
   end
-  
+
   def select_winner(white_card)
-    self.winner = white_card.user
+    self.winner = white_card.user #FIXME here is the problem
+    # need to know who in this game submitted the white card
+    # this is where creating new white_cards each game would fix it
     self.winning_white_card = white_card
     self.save
   end
-  
+
   def play_card(user, white_card)
     white_cards << white_card
   end
-    
+
 end

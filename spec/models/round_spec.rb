@@ -53,6 +53,7 @@ RSpec.describe Round, type: :model do
 
       winning_white_card_1.user = user_1
       winning_white_card_2.user = user_2
+
       game_1 = Game.new(name: "game1")
       game_2 = Game.new(name: "game2")
       round_1 = Round.create(host: host, game: game_1, black_card: black_card_1)
@@ -63,6 +64,7 @@ RSpec.describe Round, type: :model do
 
       winning_white_card_1.save
       winning_white_card_2.save
+      # FIXME this test should fail because the white_cards are the same
 
       round_1.select_winner(winning_white_card_1)
       round_2.select_winner(winning_white_card_2)
