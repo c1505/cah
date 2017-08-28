@@ -2,9 +2,9 @@ class Game < ApplicationRecord
   has_and_belongs_to_many :users
   has_many :rounds
   has_many :black_decks
-  has_many :black_cards, :through => :black_decks
+  has_many :black_cards
   has_many :white_decks
-  has_many :white_cards, :through => :white_decks
+  has_many :white_cards
 
   def started?
     !rounds.blank?
@@ -22,7 +22,6 @@ class Game < ApplicationRecord
         user.save
         white_cards.delete(hand)
       end
-      black_cards = BlackCard.all
       round.black_card = black_cards[rand(black_cards.count)]
 
       round.save
@@ -39,24 +38,15 @@ class Game < ApplicationRecord
         self.white_cards.delete(new_card)
       end
   end
-
-  def build_deck(input)
-    if input == "1"
-      self.white_cards = WhiteCard.sfw
-    else
-      self.white_cards = WhiteCard.all
-    end
-  end
-
-  def seed_cards
+  
+  def build_deck(sfw, count)
     json = File.read("cah.json")
     parsed = JSON.parse(json)
 
     black_cards = parsed["blackCards"]
 
-
     black_cards.each do |card|
-      BlackCard.create(text: card["text"], blanks: card["pick"])
+      BlackCard.create(text: card["text"], blanks: card["pick"], game_id: self.id)
     end
 
 
@@ -65,19 +55,21 @@ class Game < ApplicationRecord
 
     sfw_white_cards = sfw_white_cards["whiteCards"]
 
-    sfw_white_cards.each do |card|
-      WhiteCard.create(text: card, sfw: true)
+    sfw_white_cards.take(count).each do |card|
+      WhiteCard.create(text: card, sfw: true, game_id: self.id)
     end
 
-
-    nsfw_json = File.read("nsfw_whiteCards.json")
-    nsfw_white_cards = JSON.parse(nsfw_json)
-
-    nsfw_white_cards = nsfw_white_cards["whiteCards"]
-
-    nsfw_white_cards.each do |card|
-      WhiteCard.create(text: card, sfw: false)
+    unless sfw == "1"
+      nsfw_json = File.read("nsfw_whiteCards.json")
+      nsfw_white_cards = JSON.parse(nsfw_json)
+  
+      nsfw_white_cards = nsfw_white_cards["whiteCards"]
+  
+      nsfw_white_cards.take(count).each do |card|
+        WhiteCard.create(text: card, sfw: false, game_id: self.id)
+      end
     end
   end
+
 
 end

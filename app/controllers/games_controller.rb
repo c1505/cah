@@ -18,9 +18,8 @@ class GamesController < ApplicationController
   def create
     game = Game.new(game_params)
     game.users << create_guest
-    game.build_deck(params["other"]["sfw"])
-
     if game.save
+      game.build_deck(params["other"]["sfw"],1000)
       redirect_to game
     else
       render new_game_path

@@ -1,20 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe Game, type: :model do
-  before :each do
-    seed_cards
-  end
+
   describe "#deal" do
 
     it "removes submitted card from user, gives new card, and removes dealt card from game" do #FIXME maybe too many things for this test
 
-      game_white_cards = WhiteCard.all.sample(8)
-      game = FactoryGirl.create(:game, white_cards: game_white_cards)
+      game = FactoryGirl.create(:game)
+      game.build_deck("1", 8)
+      
 
-      player_white_cards = game_white_cards.sample(7)
+      player_white_cards = game.white_cards.sample(7)
       player = FactoryGirl.create(:user, white_cards: player_white_cards)
 
-      game.white_cards = game_white_cards - player_white_cards
+      game.white_cards = game.white_cards - player_white_cards
       played_card = player.white_cards.first
       game.deal([played_card])
 
@@ -26,6 +25,24 @@ RSpec.describe Game, type: :model do
     #  could not implement and instead clear the user.white_cards association
     # for each user at the start of the game
 
+  end
+  
+  describe "#seed_cards" do
+    it "new white cards are created for each game" do
+      game_1 = FactoryGirl.create(:game)
+      game_1.build_deck("1",20)
+      game_2 = FactoryGirl.create(:game)
+      game_2.build_deck("1",20)
+      expect(game_1.white_cards).to_not include(game_2.white_cards.first)
+    end
+    
+    it "new black cards are created for each game" do
+      game_1 = FactoryGirl.create(:game)
+      game_1.build_deck("1", 20)
+      game_2 = FactoryGirl.create(:game)
+      game_2.build_deck("1", 20)
+      expect(game_1.black_cards).to_not include(game_2.black_cards.first)
+    end
   end
   it "different users can have same white_cards if not in the same game" do
 
@@ -72,35 +89,35 @@ RSpec.describe Game, type: :model do
     # end
 
 
-  def seed_cards
-    json = File.read("cah.json")
-    parsed = JSON.parse(json)
+  # def seed_cards
+  #   json = File.read("cah.json")
+  #   parsed = JSON.parse(json)
 
-    black_cards = parsed["blackCards"]
-
-
-    black_cards.sample(5).each do |card|
-      BlackCard.create(text: card["text"], blanks: card["pick"])
-    end
+  #   black_cards = parsed["blackCards"]
 
 
-    sfw_json = File.read("sfw_whiteCards.json")
-    sfw_white_cards = JSON.parse(sfw_json)
-
-    sfw_white_cards = sfw_white_cards["whiteCards"]
-
-    sfw_white_cards.sample(30).each do |card|
-      WhiteCard.create(text: card, sfw: true)
-    end
+  #   black_cards.sample(5).each do |card|
+  #     BlackCard.create(text: card["text"], blanks: card["pick"])
+  #   end
 
 
-    nsfw_json = File.read("nsfw_whiteCards.json")
-    nsfw_white_cards = JSON.parse(nsfw_json)
+  #   sfw_json = File.read("sfw_whiteCards.json")
+  #   sfw_white_cards = JSON.parse(sfw_json)
 
-    nsfw_white_cards = nsfw_white_cards["whiteCards"]
+  #   sfw_white_cards = sfw_white_cards["whiteCards"]
 
-    nsfw_white_cards.sample(10).each do |card|
-      WhiteCard.create(text: card, sfw: false)
-    end
-  end
+  #   sfw_white_cards.sample(30).each do |card|
+  #     WhiteCard.create(text: card, sfw: true)
+  #   end
+
+
+  #   nsfw_json = File.read("nsfw_whiteCards.json")
+  #   nsfw_white_cards = JSON.parse(nsfw_json)
+
+  #   nsfw_white_cards = nsfw_white_cards["whiteCards"]
+
+  #   nsfw_white_cards.sample(10).each do |card|
+  #     WhiteCard.create(text: card, sfw: false)
+  #   end
+  # end
 end
