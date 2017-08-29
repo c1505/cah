@@ -93,7 +93,6 @@ feature 'game' do
     expect(page).to have_text "Cards Submitted"
     choose(white_card_css_id) #FIXME this fails often.  seems like it might be timing outq
     click_button "Choose Winner"
-    binding.pry
     expect(page).to have_text "The winner is: #{white_card.text.html_safe}"
     expect(Round.first.winner.id).to eq User.first.id
   end
