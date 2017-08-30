@@ -16,7 +16,9 @@ black_cards = parsed["blackCards"]
 
 
 black_cards.each do |card|
-  BlackCard.create(text: card["text"], blanks: card["pick"])
+  if card["pick"] == 1 
+    BlackCard.create(text: card["text"], blanks: card["pick"])
+  end
 end
 
 
