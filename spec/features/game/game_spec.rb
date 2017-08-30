@@ -32,6 +32,11 @@ feature 'game' do
 
     fill_in "Name", :with => "First Game"
     click_button "Create Game"
+
+    logout
+    visit '/games/1'
+    fill_in "name", :with => "Second Player"
+    click_button "Join Game"
     click_button "Start Game"
 
     expect(User.last.white_cards.count).to eq 7
@@ -112,8 +117,6 @@ scenario 'player can only submit one card', js: true, type: :feature do
 end
 
 scenario 'same white card can be used in different games by different players in different games'
-
-
 
   private
 
