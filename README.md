@@ -1,39 +1,24 @@
 Cards Against Humanity built with ruby on rails.
 
-Visit the application here:
+Visit the application here: https://gamenightcards.herokuapp.com/
 
 Thanks to https://www.crhallberg.com/cah/json/ for the cards.
 
 Read more about the game here: https://cardsagainsthumanity.com/ 
 
+Contributing
+------------
+Contributions are welcome.  Please open an issue if you see a problem or have
+a feature request.  Pull requests are also welcome.
 
-Ruby on Rails
+Setup
 -------------
 
-This application requires:
+This application uses:
 
 - Ruby 2.4.1
 - Rails 5.0.2
 
-
-
-Getting Started
----------------
-
-Documentation and Support
--------------------------
-
-Issues
--------------
-
-Similar Projects
-----------------
-
-Contributing
-------------
-
-Credits
--------
-
 License
 -------
+https://creativecommons.org/licenses/by-nc-sa/2.0/

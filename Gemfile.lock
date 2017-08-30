@@ -61,6 +61,7 @@ GEM
     bourbon (5.0.0.beta.7)
       sass (~> 3.4.22)
       thor (~> 0.19.1)
+    brakeman (3.7.2)
     builder (3.2.3)
     byebug (9.0.6)
     capybara (2.13.0)
@@ -173,6 +174,7 @@ GEM
       sass (>= 3.3)
       thor (~> 0.19)
     nenv (0.3.0)
+    newrelic_rpm (4.4.0.336)
     nio4r (2.0.0)
     nokogiri (1.7.1)
       mini_portile2 (~> 2.1.0)
@@ -328,6 +330,7 @@ PLATFORMS
 DEPENDENCIES
   administrate
   bourbon
+  brakeman
   byebug
   capybara
   coffee-rails (~> 4.2)
@@ -345,6 +348,7 @@ DEPENDENCIES
   jquery-rails
   launchy
   listen (~> 3.0.5)
+  newrelic_rpm
   pg
   poltergeist
   pry-rails
