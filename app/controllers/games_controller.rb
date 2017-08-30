@@ -50,9 +50,12 @@ class GamesController < ApplicationController
 
   def start
     @game = Game.find(params[:game_id])
-    @game.start(current_user)
-    @game.save
-
+    if @game.users.count > 1
+      @game.start(current_user)
+      @game.save
+    else
+      flash[:alert] = "You must have more than 1 player in order to start a game"
+    end
     redirect_to @game
   end
 
