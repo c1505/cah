@@ -29,32 +29,38 @@ class GamesController < ApplicationController
 
   def show
     @game = Game.find(params[:id])
-
     if @game.started?
-      @round = @game.rounds.last
-      @black_card = @round.black_card
-
-      @black_cards = @game.rounds.map do |round|
-        round.black_card
-      end
-
-      @scores = score
-
-      if @round.host == current_user
-        @white_cards = @round.white_cards
+      if user_in_game?
+        @round = @game.rounds.last
+        @black_card = @round.black_card
+  
+        @black_cards = @game.rounds.map do |round|
+          round.black_card
+        end
+  
+        @scores = score
+  
+        if @round.host == current_user
+          @white_cards = @round.white_cards
+        else
+          @white_cards = current_user.white_cards
+        end
       else
-        @white_cards = current_user.white_cards
+        flash[:alert] = "You cannot join a game already in progress"
+        redirect_to root_path
       end
     end
   end
 
   def start
     @game = Game.find(params[:game_id])
-    if @game.users.count > 1
-      @game.start(current_user)
-      @game.save
-    else
-      flash[:alert] = "You must have more than 1 player in order to start a game"
+    unless @game.started?
+      if @game.users.count > 1
+        @game.start(current_user)
+        @game.save
+      else
+        flash[:alert] = "You must have more than 1 player in order to start a game"
+      end
     end
     redirect_to @game
   end
@@ -70,11 +76,13 @@ class GamesController < ApplicationController
         [f[1][0].name, f[1].count]
       end
     end
-
-    # def current_user
-    #   current_user ||= Guest.create(name: "guest", email: rand.to_s + "@example.com")
-    # end
-
+    
+    def user_in_game?
+      if current_user
+        @game.users.include?(current_user)
+      end
+    end
+          
     def create_guest
       guest = Guest.create(name: params[:name], email: rand.to_s + "@example.com")
       sign_in(guest)
