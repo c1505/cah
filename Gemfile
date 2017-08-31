@@ -58,4 +58,6 @@ group :test do
   gem 'database_cleaner'
   gem 'launchy'
   gem 'poltergeist'
+  gem "simplecov"
+  gem "codeclimate-test-reporter", "~> 1.0.0"
 end

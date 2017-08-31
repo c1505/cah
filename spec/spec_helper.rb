@@ -16,6 +16,8 @@
 # users commonly want.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+require "simplecov"
+SimpleCov.start
 RSpec.configure do |config|
   
   config.before(:each) do |example|
