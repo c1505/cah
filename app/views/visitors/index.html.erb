@@ -1,14 +1,12 @@
-<h3>Welcome</h3>
-<% if current_user %>
-  <%= link_to "New Game", new_game_path %>
-<% else %>
-  <%= link_to "New Game as Guest", new_game_path %>
-<% end %>
-
-
-
-
-
+<div>
+  <h3>Welcome</h3>
+  <% if current_user %>
+    <%= link_to "New Game", new_game_path %>
+  <% else %>
+    <%= link_to "New Game as Guest", new_game_path %>
+  <% end %></br>
+  <%= image_tag("cah_box.jpg",size: "300x187", id: "cah_image") %>
+</div>
 
 <footer id="legal">
 <p ><b>Is this legal?</b>
